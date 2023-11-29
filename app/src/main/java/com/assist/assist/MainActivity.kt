@@ -16,10 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import okhttp3.Cache
+
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -186,7 +183,8 @@ class MainActivity : AppCompatActivity() ,TextToSpeech.OnInitListener{
                         if (response.isSuccessful) {
 
                             val searchResults = response.body()
-                            if (searchResults != null) {
+                            if (searchResults != null&&!searchResults.candidates.isEmpty()
+                                &&searchResults.candidates[0].output!=null) {
                                 playAudio(searchResults.candidates[0].output)
                             } else {
                                 showToast("No audio found for the query")
